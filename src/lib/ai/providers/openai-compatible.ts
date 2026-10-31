@@ -69,7 +69,7 @@ export class OpenAICompatibleProvider extends BaseProvider {
         const adapted: Quirks = {
           noTemperature: known.noTemperature || (call.temperature !== undefined && /temperature/i.test(message)),
           maxCompletionTokens: known.maxCompletionTokens || /max_tokens/.test(message),
-          noEffort: known.noEffort || (this.reasoningEffort(call) !== undefined && /reasoning_effort/i.test(message)),
+          noEffort: known.noEffort || (this.reasoningEffort(call) !== undefined && (/reasoning_effort/i.test(message) || /invalid argument/i.test(message))),
           json: jsonRefused ? (JSON_MODES[JSON_MODES.indexOf(known.json) + 1] ?? known.json) : known.json,
         };
         if (
@@ -88,8 +88,7 @@ export class OpenAICompatibleProvider extends BaseProvider {
 
   /** The `reasoning_effort` to send for `call`, if any; none by default, as servers differ in what they take. */
   protected reasoningEffort(call: ChatCall): ReasoningEffort | undefined {
-    void call;
-    return undefined;
+    return call.effort === "low" ? "none" : undefined;
   }
 
   private async send(call: ChatCall, { noTemperature, maxCompletionTokens, noEffort, json }: Quirks): Promise<ChatAnswer> {

@@ -76,6 +76,7 @@ export const extractProfile: Task<{ resume: string; today?: Date }, ImportedProf
     // Reading, not writing: a long think before answering only makes it slow.
     creativity: "FAITHFUL",
     effort: "low",
+    maxTokens: 8192,
     signal,
   });
   return { data: checkedProfile(answer, resume, today), promptVersion: EXTRACT_PROFILE_VERSION };

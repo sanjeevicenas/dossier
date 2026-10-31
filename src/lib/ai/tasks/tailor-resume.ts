@@ -90,6 +90,7 @@ export const tailorResume: Task<TailorInput, Unit[]> = async (provider, { profil
     schema: answerSchema,
     schemaName: "tailored_resume",
     creativity: options.creativity,
+    maxTokens: 8192,
     signal: options.signal,
   });
   // The languages line in the resume's language: the chosen one, or the posting's.
