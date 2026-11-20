@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    agentUpgrade: "security",
+  },
   // The production image runs .next/standalone: the server and only the files
   // it needs (E12-1).
   output: "standalone",
